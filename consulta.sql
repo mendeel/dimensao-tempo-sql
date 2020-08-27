@@ -50,12 +50,18 @@ DATE_TRUNC('week', cdata) AS inicio_semana,
 '(' || TO_CHAR(DATE_TRUNC('week', cdata)::DATE, 'DD/MM') || ' A ' || TO_CHAR(DATEADD('day',6,DATE_TRUNC('week', cdata))::DATE, 'DD/MM') || ')' AS range_semana,
 TO_CHAR(DATE_TRUNC('y', cdata), 'YYYY') || '/' || TO_CHAR(DATE_TRUNC('mon', cdata), 'MM') AS ano_mes,
 TO_CHAR(DATE_TRUNC('mon', cdata), 'MM') || '/' || TO_CHAR(DATE_TRUNC('y', cdata), 'YYYY') AS mes_ano,
+CASE WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 1 AND 7 THEN '1'
+WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 8 AND 14 THEN '2'
+WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 15 AND 21 THEN '3'
+WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 22 AND 28 THEN '4'
+WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 23 AND 31 THEN '5'
+END AS numero_semana,
 TO_CHAR(DATE_TRUNC('y', DATE_TRUNC('week', cdata::date)), 'YYYY') || '/' || TO_CHAR(DATE_TRUNC('mon', DATE_TRUNC('week', cdata::date)), 'MM') || ' ' || 
-CASE WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 1 AND 8 THEN '1'
-WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 9 AND 15 THEN '2'
-WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 16 AND 22 THEN '3'
-WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 23 AND 29 THEN '4'
-WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 24 AND 31 THEN '5'
+CASE WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 1 AND 7 THEN '1'
+WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 8 AND 14 THEN '2'
+WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 15 AND 21 THEN '3'
+WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 22 AND 28 THEN '4'
+WHEN DATE_PART('day', DATE_TRUNC('week', cdata::date)) BETWEEN 23 AND 31 THEN '5'
 END AS ano_mes_semana,
 dl.dia_da_semana,
 dl.dia_da_semana_completo,
